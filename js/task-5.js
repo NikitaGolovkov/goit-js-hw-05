@@ -23,7 +23,7 @@ class Car {
    */
   constructor({ speed = 0, price, maxSpeed, isOn = false, distance = 0 }) {
     this.speed = speed;
-    this.price = price;
+    this._price = price;
     this.maxSpeed = maxSpeed;
     this.isOn = isOn;
     this.distance = distance;
@@ -66,20 +66,22 @@ class Car {
    * не больше чем значение свойства maxSpeed
    */
   accelerate(value) {
-    if (this.speed + value <= this.maxSpeed) {
-      this.speed += value;
-    }
-  }
+     this.speed = value + this.speed;
+     if(this.speed > this.maxSpeed){
+       this.speed = this.maxSpeed;
+     }
+   }
 
   /*
    * Отнимает от свойства speed полученное значение,
    * при условии что результирующая скорость не меньше нуля
    */
   decelerate(value) {
-    if (this.speed - value > 0) {
-      this.speed -= value;
-    }
-  }
+     this.speed = this.speed - value;
+     if(this.speed < 0) {
+       this.speed = 0;
+     }
+   }
 
   /*
    * Добавляет в поле distance киллометраж (hours * speed),
